@@ -1,0 +1,189 @@
+{
+    "wirvsvirus.net":{ 
+        "A": {
+            "www":{
+                "properties": {
+                "metadata": {
+                    "Owner": "CTO",
+                    "Department": "Design"
+                },
+                "TTL": 3600,
+                "ARecords": [
+                    {
+                    "ipv4Address": "127.13.2.1"
+                    }
+                ]
+                }
+            }, 
+            "api":{
+                "properties": {
+                    "TTL": 3601,
+                    "ARecords": [
+                        {
+                        "ipv4Address": "127.3.3.1"
+                        }
+                    ]
+                    }
+            }
+        },
+        "AAAA":{
+            "apiv6":{
+                "properties": {
+                  "metadata": {
+                    "Department": "IT",
+                    "Owner": "CTO"
+                  },
+                  "TTL": 3601,
+                  "AAAARecords": [
+                    {
+                      "ipv6Address": "::1"
+                    }
+                  ]
+                }
+              }
+        },
+        "MX":{ 
+            "mail":{
+                "properties": {
+                  "metadata": {
+                    "Department": "IT",
+                    "Owner": "CTO"
+                  },
+                  "TTL": 3600,
+                  "MXRecords": [
+                    {
+                      "preference": 0,
+                      "exchange": "mail.wirvsvirus.net"
+                    }
+                  ]
+                }
+              }
+        },
+        "CNAME":{ 
+            "redirect":{
+                "properties": {
+                  "metadata": {
+                    "Department": "IT",
+                    "Owner": "CTO"
+                  },
+                  "TTL": 3600,
+                  "CNAMERecord": {
+                    "cname": "mail2.wirvsvirus.net"
+                  }
+                }
+              }
+        },
+        "NS":{ 
+            "api2":{
+                "properties": {
+                  "metadata": {
+                    "Department": "IT",
+                    "Owner": "CTO"
+                  },
+                  "TTL": 3600,
+                  "NSRecords": [
+                    {
+                      "nsdname": "ns1.denic.com"
+                    }
+                  ]
+                }
+              }
+        },
+        "PTR":{ 
+            "api":{
+                "properties": {
+                  "metadata": {
+                    "Department": "IT",
+                    "Owner": "CTO"
+                  },
+                  "TTL": 3600,
+                  "PTRRecords": [
+                    {
+                      "ptrdname": "localhost"
+                    }
+                  ]
+                }
+              }
+        },
+        "SRV":{ 
+            "sfb":{
+                "properties": {
+                  "metadata": {
+                    "Department": "IT",
+                    "Owner": "CTO"
+                  },
+                  "TTL": 600,
+                  "SRVRecords": [
+                    {
+                      "priority": 0,
+                      "weight": 10,
+                      "port": 80,
+                      "target": "sfbfe.wirvsvirus.net"
+                    }
+                  ]
+                }
+              }
+        },
+        "TXT":{ 
+            "text":{
+                "properties": {
+                  "TTL": 3600,
+                  "TXTRecords": [
+                    {
+                      "value": [
+                        "HEREISYOURTEXT"
+                      ]
+                    }
+                  ]
+                }
+              }
+        }
+    },
+    "aadgov.com":{
+        "MX":{ 
+          "@":{
+              "properties": {
+                "metadata": {
+                  "Department": "IT",
+                  "Owner": "CTO"
+                },
+                "TTL": 3600,
+                "MXRecords": [
+                  {
+                    "preference": 0,
+                    "exchange": "aadgov-com.mail.protection.outlook.com"
+                  }
+                ]
+              }
+            }
+        },
+        "CNAME":{ 
+          "autodiscover":{
+              "properties": {
+                "metadata": {
+                  "Department": "IT",
+                  "Owner": "CTO"
+                },
+                "TTL": 3600,
+                "CNAMERecord": {
+                  "cname": "autodiscover.outlook.com"
+                }
+              }
+            }
+        },
+        "TXT":{ 
+          "@":{
+              "properties": {
+                "TTL": 3600,
+                "TXTRecords": [
+                  {
+                    "value": [
+                      "v=spf1 include:spf.protection.outlook.com -all"
+                    ]
+                  }
+                ]
+              }
+            }
+      }
+    }
+}

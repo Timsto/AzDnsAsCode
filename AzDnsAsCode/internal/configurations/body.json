@@ -1,0 +1,133 @@
+{
+    "PUT": { 
+        "A": { 
+           "Value": {
+                    "properties": {
+                    "metadata": {
+                        "key1": "value1"
+                    },
+                    "TTL": 3600,
+                    "ARecords": [
+                        {
+                        "ipv4Address": "127.0.0.1"
+                        }
+                    ]
+                    }
+              }
+        }, 
+        "AAAA": { 
+            "Value": {
+                "properties": {
+                  "metadata": {
+                    "key1": "value1"
+                  },
+                  "TTL": 3600,
+                  "AAAARecords": [
+                    {
+                      "ipv6Address": "::1"
+                    }
+                  ]
+                }
+              }
+        }, 
+        "CNAME": { 
+            "Value": {
+                "properties": {
+                  "metadata": {
+                    "key1": "value1"
+                  },
+                  "TTL": 3600,
+                  "CNAMERecord": {
+                    "cname": "contoso.com"
+                  }
+                }
+              }
+        }, 
+        "MX": {
+            "Value": {
+                "properties": {
+                  "metadata": {
+                    "key1": "value1"
+                  },
+                  "TTL": 3600,
+                  "MXRecords": [
+                    {
+                      "preference": 0,
+                      "exchange": "mail.contoso.com"
+                    }
+                  ]
+                }
+              }
+        },
+        "NS" : {
+          "Value" : {
+            "properties": {
+              "metadata": {
+                "key1": "value1"
+              },
+              "TTL": 3600,
+              "NSRecords": [
+                {
+                  "nsdname": "ns1.contoso.com"
+                }
+              ]
+            }
+          }
+        },
+        "SOA": {
+          "Value" : {
+            "properties": {
+              "metadata": {
+                "key1": "value1"
+              },
+              "TTL": 3600,
+              "SOARecord": {
+                "host": "ns1.contoso.com",
+                "email": "hostmaster.contoso.com",
+                "serialNumber": 1,
+                "refreshTime": 3600,
+                "retryTime": 300,
+                "expireTime": 2419200,
+                "minimumTTL": 300
+              }
+            }
+          }
+        },
+        "SRV": {
+          "Value": {
+            "properties": {
+              "metadata": {
+                "key1": "value1"
+              },
+              "TTL": 3600,
+              "SRVRecords": [
+                {
+                  "priority": 0,
+                  "weight": 10,
+                  "port": 80,
+                  "target": "contoso.com"
+                }
+              ]
+            }
+          }
+        },
+        "TXT": {
+          "Value": {
+            "properties": {
+              "metadata": {
+                "key1": "value1"
+              },
+              "TTL": 3600,
+              "TXTRecords": [
+                {
+                  "value": [
+                    "string1"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+
+    }
+}
