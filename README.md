@@ -17,7 +17,7 @@ PS C:\> Set-AzDnsAsCodeConfig -Method PUT -Type A -DNSZone contoso.com -Domain a
 
 ### Multi
 ```powershell 
-PS C:\> Set-AzDnsAsCodeMultiConfig -ZoneConfigPath .\
+PS C:\> Set-AzDnsAsCodeMultiConfig -ZoneConfigPath .\zone-config.json
 ```
 
 
