@@ -45,7 +45,13 @@
         $DNSZone = $DNSZone.Name
         Write-Output "Set Entries for = Domain: $DNSZone"
         
-        #Test is Domain exist
+        #check if Domain exist
+        if ((Test-AzDnsAsCodeDomain -Name $DNSZone -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup) -eq $false) { 
+            New-AzDnsAsCodeZone -DNSZoneName $DNSZone -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup
+
+            Write-Output "Waiting for complete creation.....(10 Secounds)"
+            Start-Sleep -Seconds 10
+        }
 
         foreach ($type in $json.($DNSZone).psobject.Properties) {
             $Type = $type.Name;
@@ -63,7 +69,6 @@
                     'Domain' = $Domain
                     'TTL' = $TTL
                     'body' = $body
-                    'ApiVersion' = $script:APIversion
                     'SubscriptionId' = $SubscriptionID
                     'TenantId' = $TenantId
                     'ResourceGroup' = $ResourceGroup

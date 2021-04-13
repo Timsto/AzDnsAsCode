@@ -29,9 +29,7 @@
         foreach ($DNSZone in $json.psobject.Properties) {
             $DNSZone = $DNSZone.Name
             Write-Output "Domain: $DNSZone"
-            
-            #Test is Domain exist
-    
+               
             foreach ($type in $json.($DNSZone).psobject.Properties) {
                 $Type = $type.Name;
                 Write-Output "-Type = $Type"

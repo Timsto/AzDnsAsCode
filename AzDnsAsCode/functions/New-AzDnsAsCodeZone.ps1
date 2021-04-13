@@ -44,6 +44,8 @@
 
     $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$($DNSZoneName)?api-version=$($script:APIversion)"
 
+    Write-Output "Create DNS Zone -> $($DNSZoneName)"
+
     $response = AzAPICall -uri $Uri -Method PUT -currentTask "Creating new DNSZone $($DNSZoneName)" -body $body -listenOn Content
 ###Todo check if Zone is already exist with (Request Header IF-MATCH)
     $response | Select-Object name, `
