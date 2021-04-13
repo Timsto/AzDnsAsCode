@@ -1,5 +1,5 @@
-function Remove-AzDnsAsCodeZone 
-{ 
+﻿function Remove-AzDnsAsCodeZone
+{
     <#
     .SYNOPSIS
         Execute a request to create a new Azure DNS Zone
@@ -13,7 +13,9 @@ function Remove-AzDnsAsCodeZone
         Defaults to PUT
     
     .EXAMPLE
-        PS C:\> emove-AzDnsAsCodeZone -Name 'contoso.com' -RessourceGroupid '<RessourceGroupid>' -SubscriptionId '<SubscriptionId>'
+        PS C:\> Remove-AzDnsAsCodeZone -Name 'contoso.com' -RessourceGroupid '<RessourceGroupid>' -SubscriptionId '<SubscriptionId>'
+
+        Remove a DNS Zone inside of Azure DNS Service
     #>
     [CmdletBinding()]
 	param (
@@ -23,14 +25,21 @@ function Remove-AzDnsAsCodeZone
         
         [Parameter (Mandatory=$true)][String]$TenantId,
         
-        [Parameter (Mandatory=$true)][String]$ResourceGroup,
-
-        [Parameter (Mandatory=$false)][String]$ApiVersion = '2018-05-01'
+        [Parameter (Mandatory=$true)][String]$ResourceGroup
 	)
 
-    $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$($Name)?api-version=$APIversion"
+    #region Set uri
+        $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$($Name)?api-version=$($script:APIversion)"
+    #endregion Set uri
+    
+    #region send apicall
+        Write-Output "Remove DNS Zone $($Name)"
+        $response = AzAPICall -uri $uri -Method DELETE -currentTask "Remove DNSZone $($Name)"
+    #endregion send apicall
 
-    $response = AzAPICall -uri $uri -Method DELETE -currentTask "Remove DNSZone $($Name)"
-
-    $response
+    #region response
+        Write-Output "---------------------------------------------------------------------------------------------------"
+        Write-Output "Response ->"
+        $response
+    #region response
 }

@@ -1,5 +1,5 @@
 {
-    "wirvsvirus.net":{ 
+    "fabrikam.net":{ 
         "A": {
             "www":{
                 "properties": {
@@ -53,7 +53,7 @@
                   "MXRecords": [
                     {
                       "preference": 0,
-                      "exchange": "mail.wirvsvirus.net"
+                      "exchange": "mail.fabrikam.net"
                     }
                   ]
                 }
@@ -68,7 +68,7 @@
                   },
                   "TTL": 3600,
                   "CNAMERecord": {
-                    "cname": "mail2.wirvsvirus.net"
+                    "cname": "mail2.fabrikam.net"
                   }
                 }
               }
@@ -118,7 +118,7 @@
                       "priority": 0,
                       "weight": 10,
                       "port": 80,
-                      "target": "sfbfe.wirvsvirus.net"
+                      "target": "sfbfe.fabrikam.net"
                     }
                   ]
                 }
@@ -139,7 +139,7 @@
               }
         }
     },
-    "aadgov.com":{
+    "contoso.com":{
         "MX":{ 
           "@":{
               "properties": {
@@ -151,7 +151,7 @@
                 "MXRecords": [
                   {
                     "preference": 0,
-                    "exchange": "aadgov-com.mail.protection.outlook.com"
+                    "exchange": "contoso-com.mail.protection.outlook.com"
                   }
                 ]
               }

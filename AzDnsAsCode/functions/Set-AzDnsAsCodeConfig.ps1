@@ -1,5 +1,5 @@
 ﻿function Set-AzDnsAsCodeConfig
-{ 
+{
     <#
     .SYNOPSIS
         Execute a request against the Azure Management Api to set DNS Entries
@@ -9,6 +9,8 @@
     
     .EXAMPLE
         PS C:\> Set-AzDnsAsCodeConfig -Method PUT -Type A -DNSZone contoso.com -Domain api -TTL 3600 -Target 127.0.0.1
+
+        Set up a new DNS Config for one DNS entry
     #>
 
     [CmdletBinding(DefaultParameterSetName='default')]
@@ -17,11 +19,11 @@
         [Parameter (Mandatory=$false)][ValidateSet('A','AAAA','CNAME','MX','NS','SOA','SRV','TXT','PTR')][string]$Type,
         [Parameter (Mandatory=$true)][ValidatePattern("^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$")]$DNSZone,
         [Parameter (Mandatory=$false)][ValidatePattern("(^@)|\w+")][string]$Domain,
-        [Parameter (Mandatory=$false)][int]$TTL, 
+        [Parameter (Mandatory=$false)][int]$TTL,
         [string]$Target,
-        # MX Paramter 
+        # MX Paramter
         [Parameter(ParameterSetName='MX', Mandatory=$true)][int]$MXPreference,
-        # SRV Paramter 
+        # SRV Paramter
         [Parameter(ParameterSetName='SRV', Mandatory=$true)][int]$SRVPort,
         [Parameter(ParameterSetName='SRV', Mandatory=$true)][int]$SRVweight,
         [Parameter(ParameterSetName='SRV', Mandatory=$true)][int]$SRVPriority,
@@ -31,12 +33,11 @@
         [Parameter(ParameterSetName='SOA')][string]$SOAserialnumber,
         [Parameter(ParameterSetName='SOA')][string]$SOArefreshtime,
         [Parameter(ParameterSetName='SOA')][string]$SOAretrytime,
-        [Parameter(ParameterSetName='SOA')][string]$SOAexpireTime, 
+        [Parameter(ParameterSetName='SOA')][string]$SOAexpireTime,
         [Parameter(ParameterSetName='SOA')][string]$SOAminimumTTL,
         $body, # for Multivalue Entries
         [switch]$outputEnabled = $false,
         # Azure required Parameters
-        [Parameter (Mandatory=$false)][String]$ApiVersion = '2018-05-01',
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
         [Parameter (Mandatory=$true)][String]$TenantId,
         [Parameter (Mandatory=$true)][String]$ResourceGroup
@@ -44,24 +45,23 @@
 
 
     #region URL
- 
-            $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$DNSZone/$Type/$($Domain)?api-version=$APIversion"
+        $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$DNSZone/$Type/$($Domain)?api-version=$($script:APIversion)"
     #endregion URL
     #region Body
-    if (-not $body) {  
+    if (-not $body) {
         $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
         $body = Get-Content $ScriptDir\internal\configurations\body.json | ConvertFrom-Json
         if ($Method -eq 'PUT') {
             switch ($type) {
-                A {  
-                    #Var setzen                  
+                A {
+                    #Var setzen
                         $body.$Method.$type.Value.properties.ARecords[0].ipv4Address = $Target
                         $body.$Method.$type.Value.properties.TTL = $TTL
                         $body.$Method.$type.Value.properties.metadata.Key1 = $Domain
                     $body = $body.$Method.$Type.Value | ConvertTo-Json -Depth 10
                 }
-                AAAA { 
-                    #Var setzen                  
+                AAAA {
+                    #Var setzen
                         $body.$Method.$type.Value.properties.AAAARecords[0].ipv6Address = $Target
                         $body.$Method.$type.Value.properties.TTL = $TTL
                         $body.$Method.$type.Value.properties.metadata.Key1 = $Domain
@@ -73,7 +73,6 @@
                         $body.$Method.$type.Value.properties.TTL = $TTL
                         $body.$Method.$type.Value.properties.metadata.Key1 = $Domain
                     $body = $body.$Method.$Type.Value | ConvertTo-Json -Depth 10
-
                 }
                 MX {
                     #Var setzen
@@ -82,7 +81,6 @@
                         $body.$Method.$type.Value.properties.TTL = $TTL
                         $body.$Method.$type.Value.properties.metadata.Key1 = $Domain
                     $body = $body.$Method.$Type.Value | ConvertTo-Json -Depth 10
-
                 }
                 NS {
                     #Var setzen
@@ -134,17 +132,18 @@
         else {
             $response = AzAPICall -uri $uri -method $Method -body $body -listenOn Content
         }
-    "Response:"
-    #endregion API Call  
+        Write-Output "---------------------------------------------------------------------------------------------------"
+        Write-Output "Response:"
+    #endregion API Call
     #region Output
     if ($Method -eq 'DELETE' -and [string]::IsNullOrWhiteSpace($response)) {"DELETE complete"}
-    else { 
-        if ($all) { "Anzahl Records: " + $response.value.Count    
-        $output = $response.Value | Select-Object name, `
-        @{Name = "Type"; Expression = {($_.properties | Get-Member | Where-Object {$_.Name -like "*Recor*"}).Name -replace "Records","" -replace "Record",""}}, `
-        @{Name = "TTL"; Expression = {"$($_.properties.TTL)"}}, `
-        @{Name = "Properties"; Expression = { [string]($_.properties | Select-Object -ExpandProperty "*Recor*")}}, `
-        @{Name = "MetaData"; Expression = {"$($_.properties.metadata)"}} | Format-Table -AutoSize
+    else {
+        if ($all) { "Anzahl Records: " + $response.value.Count
+            $output = $response.Value | Select-Object name, `
+            @{Name = "Type"; Expression = {($_.properties | Get-Member | Where-Object {$_.Name -like "*Recor*"}).Name -replace "Records","" -replace "Record",""}}, `
+            @{Name = "TTL"; Expression = {"$($_.properties.TTL)"}}, `
+            @{Name = "Properties"; Expression = { [string]($_.properties | Select-Object -ExpandProperty "*Recor*")}}, `
+            @{Name = "MetaData"; Expression = {"$($_.properties.metadata)"}} | Format-Table -AutoSize
         }
         else {
             $output = $response | Select-Object name, `
@@ -152,7 +151,8 @@
             @{Name = "TTL"; Expression = {"$($_.properties.TTL)"}}, `
             @{Name = "Properties"; Expression = { [string]($_.properties | Select-Object -ExpandProperty "*Recor*")}}, `
             @{Name = "MetaData"; Expression = {"$($_.properties.metadata)"}} | Format-Table -AutoSize
-        } 
+        }
     }
     #endregion Output
+    return $output
 }
