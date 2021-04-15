@@ -20,8 +20,39 @@ PS C:\> Set-AzDnsAsCodeConfig -Method PUT -Type A -DNSZone contoso.com -Domain a
 PS C:\> Set-AzDnsAsCodeMultiConfig -ZoneConfigPath .\zone-config.json
 ```
 
-
-
+### Zoneconfig 
+```json
+{
+    "fabrikam.net":{ 
+        "A": {
+            "www":{
+                "properties": {
+                "metadata": {
+                    "Owner": "CTO",
+                    "Department": "Design"
+                },
+                "TTL": 3600,
+                "ARecords": [
+                    {
+                    "ipv4Address": "127.13.2.1"
+                    }
+                ]
+                }
+            }, 
+            "api":{
+                "properties": {
+                    "TTL": 3601,
+                    "ARecords": [
+                        {
+                        "ipv4Address": "127.3.3.1"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
+```
 # Authentication
 This module will use your Powershell Azure Context. Just connect with Connect-AzAccount and start working on DNS Infrastructure
 
