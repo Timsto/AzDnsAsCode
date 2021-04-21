@@ -2,40 +2,63 @@
 {
     <#
     .SYNOPSIS
-        create a Bearer Token for authentication to Azure DNS API Endpoint
+        get token for specific Api Endpoint
     
     .DESCRIPTION
-        create a Bearer Token for authentication to Azure DNS API Endpoint
+        get token for specific Api Endpoint
     
+    .PARAMETER targetEndPoint
+        Api Endpoint like 'MsGraphApi'
 
-    .PARAMETER TargetEndpoint
-        Decide for which APi Endpint, the token should be created
-    
     .EXAMPLE
-        PS C:\> createBearerToken -targetEndPoint "ManagementAPI"
+        PS C:\> createBearerToken -targetEndpoint "MsGraphApi"
+
+        get token
     #>
 	[CmdletBinding()]
 	param (
 		$targetEndPoint
 	)
-    $checkContext = Get-AzContext -ErrorAction Stop
-    Write-Host "+Processing new bearer token request ($targetEndPoint)"
-    if ($targetEndPoint -eq "ManagementAPI") {
+    Set-AzApiCallContext
+    Set-AzApiCallEnvironment
+
+    Write-Output "+Processing new bearer token request ($targetEndPoint)"
+    if ($targetEndPoint -eq "AzManagementAPI") {
         $azureRmProfile = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile;
         $profileClient = New-Object Microsoft.Azure.Commands.ResourceManager.Common.RMProfileClient($azureRmProfile);
         $catchResult = "letscheck"
         try {
-            $newBearerAccessTokenRequest = ($profileClient.AcquireAccessToken($checkContext.Subscription.TenantId))
+            $newBearerAccessTokenRequest = ($profileClient.AcquireAccessToken($script:checkContext.Subscription.TenantId))
         }
         catch {
             $catchResult = $_
         }
     }
-    if ($targetEndPoint -eq "GraphAPI") {
-        $contextForGraphToken = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile.DefaultContext
+    if ($targetEndPoint -eq "MsGraphAPI") {
+        $contextForMSGraphToken = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile.DefaultContext
         $catchResult = "letscheck"
         try {
-            $newBearerAccessTokenRequest = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($contextForGraphToken.Account, $contextForGraphToken.Environment, $contextForGraphToken.Tenant.id.ToString(), $null, [Microsoft.Azure.Commands.Common.Authentication.ShowDialog]::Never, $null, "$(($htAzureEnvironmentRelatedUrls).($checkContext.Environment.Name).GraphUrl)")
+            $newBearerAccessTokenRequest = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($contextForMSGraphToken.Account, $contextForMSGraphToken.Environment, $contextForMSGraphToken.Tenant.id.ToString(), $null, [Microsoft.Azure.Commands.Common.Authentication.ShowDialog]::Never, $null, "$(($script:htAzureEnvironmentRelatedUrls).(checkContext).Environment.Name).MSGraphUrl)")
+        }
+        catch {
+            $catchResult = $_
+        }
+    }
+    if ($targetEndPoint -eq "AzDevOps") {
+        $contextForADOToken = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile.DefaultContext
+        $catchResult = "letscheck"
+        try {
+            $newBearerAccessTokenRequest = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($contextForADOToken.Account, $contextForADOToken.Environment, $contextForADOToken.Tenant.Id.ToString(), $null, [Microsoft.Azure.Commands.Common.Authentication.ShowDialog]::Never, $null, "https://app.vssps.visualstudio.com/")
+        }
+        catch {
+            $catchResult = $_
+        }
+    }
+    if ($targetEndPoint -eq "MsPowerBi") {
+        $contextForPowerBIToken = [Microsoft.Azure.Commands.Common.Authentication.Abstractions.AzureRmProfileProvider]::Instance.Profile.DefaultContext
+        $catchResult = "letscheck"
+        try {
+            $newBearerAccessTokenRequest = [Microsoft.Azure.Commands.Common.Authentication.AzureSession]::Instance.AuthenticationFactory.Authenticate($contextForPowerBIToken.Account, $contextForPowerBIToken.Environment, $contextForPowerBIToken.Tenant.Id.ToString(), $null, [Microsoft.Azure.Commands.Common.Authentication.ShowDialog]::Never, $null, "https://graph.microsoft.com")
         }
         catch {
             $catchResult = $_
@@ -48,12 +71,32 @@
         Throw "Error - check the last console output for details"
     }
     $dateTimeTokenCreated = (get-date -format "MM/dd/yyyy HH:mm:ss")
-    if ($targetEndPoint -eq "ManagementAPI") {
-        $script:htBearerAccessToken.AccessTokenManagement = $newBearerAccessTokenRequest.AccessToken
+
+    if ($targetEndPoint -eq "AzManagementAPI") {
+        $script:htBearerAccessToken.AzManagementAPI = [PSCustomObject]@{
+            AccessToken = $newBearerAccessTokenRequest.AccessToken
+            expire = $newBearerAccessTokenRequest.ExpiresOn
+        }
     }
-    if ($targetEndPoint -eq "GraphAPI") {
-        $script:htBearerAccessToken.AccessTokenGraph = $newBearerAccessTokenRequest.AccessToken
+    if ($targetEndPoint -eq "MsGraphAPI") {
+        $script:htBearerAccessToken.MsGraphAPI = [PSCustomObject]@{
+            AccessToken = $newBearerAccessTokenRequest.AccessToken
+            expire = $newBearerAccessTokenRequest.ExpiresOn
+        }
     }
+    if ($targetEndPoint -eq "AzDevOps") {
+        $script:htBearerAccessToken.AzDevOps = [PSCustomObject]@{
+            AccessToken = $newBearerAccessTokenRequest.AccessToken
+            expire = $newBearerAccessTokenRequest.ExpiresOn
+        }
+    }
+    if ($targetEndPoint -eq "MsPowerBi") {
+        $script:htBearerAccessToken.MsPowerBi = [PSCustomObject]@{
+            AccessToken = $newBearerAccessTokenRequest.AccessToken
+            expire = $newBearerAccessTokenRequest.ExpiresOn
+        }
+    }
+
     $bearerDetails = GetJWTDetails -token $newBearerAccessTokenRequest.AccessToken
     $bearerAccessTokenExpiryDateTime = $bearerDetails.expiryDateTime
     $bearerAccessTokenTimeToExpiry = $bearerDetails.timeToExpiry
