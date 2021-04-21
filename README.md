@@ -4,7 +4,18 @@ This Module will support you with handle your DNS zones within Azure. Write your
 
 For more information For information on how to get started, additional dokumentation or examples, check out the [Wiki](https://github.com/timsto/AzDnsAsCode/wiki)
 
+## Branches
 
+### master
+
+[![codecov](https://codecov.io/gh/Timsto/AzDnsAsCode/branch/master/graph/badge.svg)](https://codecov.io/gh/Timsto/AzDnsAsCode)
+
+This is the branch containing the latest release -
+no contributions should be made directly to this branch.
+
+### dev
+
+[![codecov](https://codecov.io/gh/Timsto/AzDnsAsCode/branch/Dev/graph/badge.svg)](https://codecov.io/gh/Timsto/AzDnsAsCode)
 # Installation
 ```powershell 
 PS C:\> Install-Module AzDnsAsCode 
