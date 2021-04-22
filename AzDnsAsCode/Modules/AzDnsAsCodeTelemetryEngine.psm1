@@ -48,13 +48,7 @@ function Add-AzDnsAsCodeTelemetryEvent
 
         try
         {
-            if ($null -ne $Data.TenantId)
-            {
-                $principalValue = $Data.TenantId
-                $Data.Add("Tenant", $principalValue)
-            }
-
-            $Data.Remove("TenandId") | Out-Null
+            $Data.Remove("TenantId") | Out-Null
 
             # Capture PowerShell Version Info
             $Data.Add("PSMainVersion", $PSVersionTable.PSVersion.Major.ToString() + "." + $PSVersionTable.PSVersion.Minor.ToString())
@@ -165,7 +159,7 @@ function Get-AzDnsAsCodeTelemetryOption
     try
     {
         return @{
-            Enabled            = [System.Environment]::GetEnvironmentVariable('AzDnsAsCodeTelemetryEnabled', `
+            Enabled = [System.Environment]::GetEnvironmentVariable('AzDnsAsCodeTelemetryEnabled', `
                     [System.EnvironmentVariableTarget]::Machine)
             InstrumentationKey = [System.Environment]::GetEnvironmentVariable('AzDnsAsCodeTelemetryInstrumentationKey', `
                     [System.EnvironmentVariableTarget]::Machine)

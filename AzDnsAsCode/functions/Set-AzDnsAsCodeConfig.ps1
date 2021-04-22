@@ -48,7 +48,7 @@
         #$data.Add("DNSZone", $DNSZone)
         $data.Add("Method", $Method)
         $data.Add("Type", $Type)
-        $data.Add("TenantId", $TenantId)
+        #$data.Add("TenantId", $TenantId)
         Add-AzDnsAsCodeTelemetryEvent -Data $data
     #endregion TelemetryData
 
