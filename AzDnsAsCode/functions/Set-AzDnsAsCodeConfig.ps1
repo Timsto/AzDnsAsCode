@@ -43,6 +43,14 @@
         [Parameter (Mandatory=$true)][String]$ResourceGroup
     )
 
+    #region TelemetryData
+        $data = [System.Collections.Generic.Dictionary[[String], [String]]]::new()
+        #$data.Add("DNSZone", $DNSZone)
+        $data.Add("Method", $Method)
+        $data.Add("Type", $Type)
+        $data.Add("TenantId", $TenantId)
+        Add-AzDnsAsCodeTelemetryEvent -Data $data
+    #endregion TelemetryData
 
     #region URL
         $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$DNSZone/$Type/$($Domain)?api-version=$($script:APIversion)"

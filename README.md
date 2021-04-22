@@ -16,11 +16,11 @@ no contributions should be made directly to this branch.
 ### dev
 
 [![codecov](https://codecov.io/gh/Timsto/AzDnsAsCode/branch/Dev/graph/badge.svg)](https://codecov.io/gh/Timsto/AzDnsAsCode)
-# Installation
+## Installation
 ```powershell 
 PS C:\> Install-Module AzDnsAsCode 
 ```
-# Example 
+## Example 
 ### Single 
 ```powershell 
 PS C:\> Set-AzDnsAsCodeConfig -Method PUT -Type A -DNSZone contoso.com -Domain api -TTL 3600 -Target 127.0.0.1
@@ -64,7 +64,7 @@ PS C:\> Set-AzDnsAsCodeMultiConfig -ZoneConfigPath .\zone-config.json
     }
 }
 ```
-# Authentication
+## Authentication
 This module will use your Powershell Azure Context. Just connect with Connect-AzAccount and start working on DNS Infrastructure
 
 Allowed Azure AD object types: 
@@ -72,9 +72,22 @@ Allowed Azure AD object types:
   - Service Principal
   - Managed Identity (need to be checked!)
 
-# Permissions
+## Permissions
 Need the following role from Azure Role-based Access Control: 
 - DNS Zone Contributor
-# Common Issues
+## Common Issues
 - private Azure DNS currently not working
 - Check your permissions on the zone. 
+
+# Telemetry Data
+ AzDnsAsCode captures Telemetry data about following Data: 
+- Method
+- Type 
+- Version
+- usageLocation
+
+Users can opt-out to prevent telemetry from being sent back to the 'AzDnsAsCode' team by running the following command:
+
+```powershell 
+PS C:\> Set-AzDnsAsCodeTelemetryOption -Enabled $False
+```

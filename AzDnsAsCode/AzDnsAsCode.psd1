@@ -3,7 +3,7 @@
 	RootModule = 'AzDnsAsCode.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '1.0.0'
+	ModuleVersion = '1.0.1'
 	
 	# ID used to uniquely identify this module
 	GUID = 'f3ccfc72-148e-4bd3-a8df-b4f1a6c67f05'
@@ -39,6 +39,11 @@
 	# Format files (.ps1xml) to be loaded when importing this module
 	# FormatsToProcess = @('xml\AzDnsAsCode.Format.ps1xml')
 	
+	# Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
+	NestedModules     = @(
+        'Modules\AzDnsAsCodeTelemetryEngine.psm1'
+    )
+
 	# Functions to export from this module
 	FunctionsToExport = @( 
 		'New-AzDnsAsCodeZone'
@@ -47,22 +52,24 @@
 		'Set-AzDnsAsCodeMulticonfig'
 		'Get-AzDnsAsCodeZoneConfig'
 		'Show-AzDnsAsCodeConfiguration'	
+		'Get-AzDnsAsCodeTelemetryOption'
+		'Set-AzDnsAsCodeTelemetryOption'
 	)
 	
 	# Cmdlets to export from this module
 	CmdletsToExport = ''
 	
 	# Variables to export from this module
-	VariablesToExport = ''
+	#VariablesToExport = ''
 	
 	# Aliases to export from this module
-	AliasesToExport = ''
+	#AliasesToExport = ''
 	
 	# List of all modules packaged with this module
-	ModuleList = @()
+	#ModuleList = @()
 	
 	# List of all files packaged with this module
-	FileList = @()
+	#FileList = @()
 	
 	# Private data to pass to the module specified in ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 	PrivateData = @{
@@ -71,13 +78,13 @@
 		PSData = @{
 			
 			# Tags applied to this module. These help with module discovery in online galleries.
-			# Tags = @()
+			Tags =  'AzureDNS', 'ConfigasCode'
 			
 			# A URL to the license for this module.
-			# LicenseUri = ''
+			LicenseUri = 'https://github.com/Timsto/AzDnsAsCode/blob/master/LICENSE'
 			
 			# A URL to the main website for this project.
-			# ProjectUri = ''
+			ProjectUri = 'https://github.com/Timsto/AzDnsAsCode'
 			
 			# A URL to an icon representing this module.
 			# IconUri = ''
