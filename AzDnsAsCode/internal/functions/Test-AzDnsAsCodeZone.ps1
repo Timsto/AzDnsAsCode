@@ -26,7 +26,7 @@
     $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$($Name)?api-version=$($script:APIversion)"
 
     try {
-        $response = AzAPICall -uri $uri -method Get -currentTask "Check if $($Name) exist" -listenOn Content
+        AzAPICall -uri $uri -method Get -currentTask "Check if $($Name) exist" -listenOn Content | Out-Null
         return $true
     }
     catch {

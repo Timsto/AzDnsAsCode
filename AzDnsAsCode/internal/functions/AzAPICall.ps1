@@ -122,7 +122,7 @@
             "Content-Type" = "application/json";
             "Authorization" = "Bearer $bearerToUse"
         }
-        if ($consistencylevel) { 
+        if ($consistencylevel) {
             $Header = @{
                 "Content-Type" = "application/json";
                 "Authorization" = "Bearer $bearerToUse";
@@ -144,10 +144,10 @@
         }
         catch {
             try {
-                if ($Method -like "Head" -and $targetEndpoint -eq "AzManagementAPI") { 
+                if ($Method -like "Head" -and $targetEndpoint -eq "AzManagementAPI") {
                     $catchResult = $_.Exception.Response
                 }
-                else { 
+                else {
                     $catchResultPlain = $_.ErrorDetails.Message
                     $catchResult = ($catchResultPlain | ConvertFrom-Json -ErrorAction SilentlyContinue)
                 }

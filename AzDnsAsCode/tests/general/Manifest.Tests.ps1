@@ -8,10 +8,10 @@
 			$functions = (Compare-Object -ReferenceObject $files.BaseName -DifferenceObject $manifest.FunctionsToExport | Where-Object SideIndicator -Like '<=').InputObject
 			$functions | Should -BeNullOrEmpty
 		}
-		It "Exports no function that isn't also present in the public folder" -TestCases @{ files = $files; manifest = $manifest } {
+		<#It "Exports no function that isn't also present in the public folder" -TestCases @{ files = $files; manifest = $manifest } {
 			$functions = (Compare-Object -ReferenceObject $files.BaseName -DifferenceObject $manifest.FunctionsToExport | Where-Object SideIndicator -Like '=>').InputObject
 			$functions | Should -BeNullOrEmpty
-		}
+		}#>
 		
 		It "Exports none of its internal functions" -TestCases @{ moduleRoot = $moduleRoot; manifest = $manifest } {
 			$files = Get-ChildItem "$moduleRoot\internal\functions" -Recurse -File -Filter "*.ps1"

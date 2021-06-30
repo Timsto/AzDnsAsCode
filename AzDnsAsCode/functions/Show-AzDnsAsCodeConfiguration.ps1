@@ -2,17 +2,18 @@
 {
     <#
     .SYNOPSIS
-        Execute a request to create a new Azure DNS Zone
+        Show current config from .json file
     
     .DESCRIPTION
-        Execute a request to create a new Azure DNS Zone
+        Show current config from .json file
     
 
-    .PARAMETER path
+    .PARAMETER ZoneConfigPath
         Location of the internal templat
     .EXAMPLE
         PS C:\> Show-AzDnsAsCodeTemplate
-    
+        
+        Show current config
     #>
 
     [CmdletBinding()]
@@ -21,7 +22,6 @@
     )
     
     begin {
-        $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
         $json = Get-Content -Path $ZoneConfigPath | convertfrom-json
     }
     
@@ -41,7 +41,7 @@
                     $json.$DNSZone.($type).$Domain | Select-Object `
                     @{Name = "Type"; Expression = {($_.properties | Get-Member | Where-Object {$_.Name -like "*Recor*"}).Name -replace "Records","" -replace "Record",""}}, `
                     @{Name = "TTL"; Expression = {"$($_.properties.TTL)"}}, `
-                    @{Name = "Properties"; Expression = { ($_.properties | Select-Object -ExpandProperty "*Recor*")}}, `
+                    @{Name = "Properties"; Expression = {($_.properties | Select-Object -ExpandProperty "*Recor*")}}, `
                     @{Name = "MetaData"; Expression = {"$($_.properties.metadata)"}} | Format-Table -AutoSize
                 }
             }

@@ -38,23 +38,23 @@
         
     )
 
-    $json = Get-Content $ZoneConfigPath | convertfrom-json
+    $json = Get-Content $ZoneConfigPath | ConvertFrom-json
 
 
     foreach ($DNSZone in $json.psobject.Properties) {
         $DNSZone = $DNSZone.Name
         Write-Output "Set Entries for = Domain: $DNSZone"
-        
+
         #check if Domain exist
-        if ((Test-AzDnsAsCodeDomain -Name $DNSZone -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup) -eq $false) { 
+        if ((Test-AzDnsAsCodeDomain -Name $DNSZone -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup) -eq $false) {
             New-AzDnsAsCodeZone -DNSZoneName $DNSZone -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup
 
-            Write-Output "Waiting for complete creation.....(10 Secounds)"
+            Write-Output "Waiting for completing creation.....(10 Secounds)"
             Start-Sleep -Seconds 10
         }
 
         foreach ($type in $json.($DNSZone).psobject.Properties) {
-            $Type = $type.Name;
+            $Type = $type.Name
             Write-Output "--Create Entries for Type = $Type"
     
             foreach ($Domain in $json.$DNSZone.($type).psobject.Properties) {
