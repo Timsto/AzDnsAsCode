@@ -11,6 +11,15 @@
     .PARAMETER Name
         Which rest method to use.
         Defaults to PUT
+
+    .PARAMETER SubscriptionID
+        Set Subscription ID
+
+    .PARAMETER TenantID
+        Set Tenant ID
+
+    .PARAMETER ResourceGroup
+        Set ResourceGroup NAME (NOT ID!!!)
     
     .EXAMPLE
         PS C:\> Remove-AzDnsAsCodeZone -Name 'contoso.com' -RessourceGroupid '<RessourceGroupid>' -SubscriptionId '<SubscriptionId>'

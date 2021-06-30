@@ -19,14 +19,14 @@
         [Parameter (Mandatory=$false)][ValidateSet('A','AAAA','CNAME','MX','NS','SOA','SRV','TXT','PTR')][string]$Type,
         [Parameter (Mandatory=$true)][ValidatePattern("^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$")]$DNSZone,
         [Parameter (Mandatory=$false)][ValidatePattern("(^@)|\w+")][string]$Domain,
-        [Parameter (Mandatory=$false)][int]$TTL,
+        [Parameter (Mandatory=$false)][ValidatePattern("\d+")][int]$TTL,
         [string]$Target,
         # MX Paramter
         [Parameter(ParameterSetName='MX', Mandatory=$true)][int]$MXPreference,
         # SRV Paramter
-        [Parameter(ParameterSetName='SRV', Mandatory=$true)][int]$SRVPort,
+        [Parameter(ParameterSetName='SRV', Mandatory=$true)][ValidatePattern("\d+")][int]$SRVPort,
         [Parameter(ParameterSetName='SRV', Mandatory=$true)][int]$SRVweight,
-        [Parameter(ParameterSetName='SRV', Mandatory=$true)][int]$SRVPriority,
+        [Parameter(ParameterSetName='SRV', Mandatory=$true)][ValidatePattern("\d+")][int]$SRVPriority,
         # SOA Paramter
         [Parameter(ParameterSetName='SOA')][string]$SOAhost,
         [Parameter(ParameterSetName='SOA')][string]$SOAemail,
@@ -43,6 +43,14 @@
         [Parameter (Mandatory=$true)][String]$ResourceGroup
     )
 
+    #region TelemetryData
+        $data = [System.Collections.Generic.Dictionary[[String], [String]]]::new()
+        #$data.Add("DNSZone", $DNSZone)
+        $data.Add("Method", $Method)
+        $data.Add("Type", $Type)
+        #$data.Add("TenantId", $TenantId)
+        Add-AzDnsAsCodeTelemetryEvent -Data $data
+    #endregion TelemetryData
 
     #region URL
         $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$DNSZone/$Type/$($Domain)?api-version=$($script:APIversion)"

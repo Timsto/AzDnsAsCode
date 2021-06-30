@@ -7,6 +7,27 @@
     .DESCRIPTION
         Execute a request against the Azure Management Api to set DNS Entries
     
+    .PARAMETER Method
+        Set Method for API Call
+        
+    .PARAMETER Type
+         Set DNS Type
+         
+    .PARAMETER DNSZone
+        Set DNSZone
+
+    .PARAMETER Domain
+        Set Domain
+
+    .PARAMETER SubscriptionID
+        Set Subscription ID
+
+    .PARAMETER TenantID
+        Set Tenant ID
+
+    .PARAMETER ResourceGroup
+        Set ResourceGroup NAME (NOT ID!!!)
+
     .EXAMPLE
         PS C:\> Get-AzDnsAsCodeZoneConfig -Method Get -DNSZone contoso.com -Domain api
         PS C:\> Get-AzDnsAsCodeZoneConfig -Method Get -DNSZone contoso.com -Type A
@@ -45,7 +66,7 @@
     #endregion API Call
     #region Output
     if ($response.Count) {
-        Write-Output  "Anzahl Records: " + $response.value.Count
+        Write-Output  "Anzahl Records: $($response.value.Count)"
         $output = $response.value | Select-Object name, `
         @{Name = "Type"; Expression = {($_.properties | Get-Member | Where-Object {$_.Name -like "*Recor*"}).Name -replace "Records","" -replace "Record",""}}, `
         @{Name = "TTL"; Expression = {"$($_.properties.TTL)"}}, `

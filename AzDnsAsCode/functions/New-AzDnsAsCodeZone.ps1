@@ -7,10 +7,22 @@
     .DESCRIPTION
         Execute a request to create a new Azure DNS Zone
     
-    .PARAMETER Name
+    .PARAMETER DNSZoneName
         Which rest method to use.
         Defaults to PUT
-    
+
+    .PARAMETER MetaData
+        Set MetaData
+        
+    .PARAMETER SubscriptionID
+        Set Subscription ID
+
+    .PARAMETER TenantID
+        Set Tenant ID
+
+    .PARAMETER ResourceGroup
+        Set ResourceGroup NAME (NOT ID!!!)
+        
     .EXAMPLE
         PS C:\> New-AzDnsAsCodeZone -Name 'contoso.com' -RessourceGroupid '<RessourceGroupid>' -SubscriptionId '<SubscriptionId>'
 

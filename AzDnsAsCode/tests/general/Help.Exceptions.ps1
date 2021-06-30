@@ -1,6 +1,7 @@
 ﻿# List of functions that should be ignored
 $global:FunctionHelpTestExceptions = @(
-    
+  'Set-AzDnsAsCodeConfig'
+  'AzAPICall'
 )
 
 <#
@@ -22,5 +23,5 @@ $global:HelpTestEnumeratedArrays = @(
   "Get-DbaCmObject"       = @("DoNotUse")
 #>
 $global:HelpTestSkipParameterType = @{
-    
+  
 }
