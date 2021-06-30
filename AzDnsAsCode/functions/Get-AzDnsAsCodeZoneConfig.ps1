@@ -1,5 +1,6 @@
 ﻿function Get-AzDnsAsCodeZoneConfig
 {
+
     <#
     .SYNOPSIS
         Execute a request against the Azure Management Api to set DNS Entries
@@ -20,7 +21,7 @@
         Set Domain
 
     .PARAMETER SubscriptionID
-        Set Subscription ID
+    Set Subscription ID
 
     .PARAMETER ResourceGroup
         Set ResourceGroup NAME (NOT ID!!!)
@@ -31,18 +32,15 @@
 
         Get Config for a zone
     #>
-
     [CmdletBinding(DefaultParameterSetName='default')]
-    param (
+    param(
         [Parameter (Mandatory=$false)][ValidateSet('GET')][string]$Method,
         [Parameter (Mandatory=$false)][ValidateSet('A','AAAA','CNAME','MX','NS','SOA','SRV','TXT','PTR')][string]$Type,
         [Parameter (Mandatory=$false)][ValidatePattern("^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$")]$DNSZone,
         [Parameter (Mandatory=$false)][ValidatePattern("(^@)|\w+")][string]$Domain,
-        # Azure required Parameters
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
         [Parameter (Mandatory=$true)][String]$ResourceGroup
     )
-
     #region URL
     if ($type -and $Domain) {
         $uri = "https://management.azure.com/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.Network/dnszones/$DNSZone/$($Type)/$($Domain)?api-version=$($script:APIversion)"
@@ -56,7 +54,7 @@
     #endregion URL
     
     #region  API Call
-        $response = AzAPICall -uri $uri -method Get -listenOn Content
+        $response = AzAPICall -uri $uri -Method Get -listenOn Content
         Write-Output "---------------------------------------------------------------------------------------------------"
         Write-Output "Response -> "
     #endregion API Call
