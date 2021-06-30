@@ -6,7 +6,6 @@
     
     .DESCRIPTION
         Execute a request to create a new Azure DNS Zone
-    
 
     .PARAMETER Name
         Which rest method to use.
@@ -14,9 +13,6 @@
 
     .PARAMETER SubscriptionID
         Set Subscription ID
-
-    .PARAMETER TenantID
-        Set Tenant ID
 
     .PARAMETER ResourceGroup
         Set ResourceGroup NAME (NOT ID!!!)
@@ -31,9 +27,7 @@
         [Parameter (Mandatory=$true)][String]$Name,
 
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
-        
-        [Parameter (Mandatory=$true)][String]$TenantId,
-        
+
         [Parameter (Mandatory=$true)][String]$ResourceGroup
 	)
 

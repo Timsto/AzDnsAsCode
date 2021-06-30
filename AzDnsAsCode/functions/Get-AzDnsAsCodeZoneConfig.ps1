@@ -22,9 +22,6 @@
     .PARAMETER SubscriptionID
         Set Subscription ID
 
-    .PARAMETER TenantID
-        Set Tenant ID
-
     .PARAMETER ResourceGroup
         Set ResourceGroup NAME (NOT ID!!!)
 
@@ -43,7 +40,6 @@
         [Parameter (Mandatory=$false)][ValidatePattern("(^@)|\w+")][string]$Domain,
         # Azure required Parameters
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
-        [Parameter (Mandatory=$true)][String]$TenantId,
         [Parameter (Mandatory=$true)][String]$ResourceGroup
     )
 

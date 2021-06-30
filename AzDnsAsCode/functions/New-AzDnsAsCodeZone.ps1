@@ -11,14 +11,8 @@
         Which rest method to use.
         Defaults to PUT
 
-    .PARAMETER MetaData
-        Set MetaData
-        
     .PARAMETER SubscriptionID
         Set Subscription ID
-
-    .PARAMETER TenantID
-        Set Tenant ID
 
     .PARAMETER ResourceGroup
         Set ResourceGroup NAME (NOT ID!!!)
@@ -34,12 +28,8 @@
 	param (
         [Parameter (Mandatory=$true)][String]$DNSZoneName,
 
-        [Parameter (Mandatory=$false)][Hashtable]$MetaData,
-
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
-        
-        [Parameter (Mandatory=$true)][String]$TenantId,
-        
+
         [Parameter (Mandatory=$true)][String]$ResourceGroup
 	)
     $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path

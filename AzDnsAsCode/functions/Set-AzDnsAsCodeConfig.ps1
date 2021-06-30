@@ -36,10 +36,8 @@
         [Parameter(ParameterSetName='SOA')][string]$SOAexpireTime,
         [Parameter(ParameterSetName='SOA')][string]$SOAminimumTTL,
         $body, # for Multivalue Entries
-        [switch]$outputEnabled = $false,
         # Azure required Parameters
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
-        [Parameter (Mandatory=$true)][String]$TenantId,
         [Parameter (Mandatory=$true)][String]$ResourceGroup
     )
 
@@ -48,7 +46,6 @@
         #$data.Add("DNSZone", $DNSZone)
         $data.Add("Method", $Method)
         $data.Add("Type", $Type)
-        #$data.Add("TenantId", $TenantId)
         Add-AzDnsAsCodeTelemetryEvent -Data $data
     #endregion TelemetryData
 

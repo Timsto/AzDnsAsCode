@@ -8,7 +8,7 @@
         Test if DNSZone exist in Azure DNS Service
     
     .EXAMPLE
-        PS C:\> Test-AzDnsAsCodeDomain -Name contoso.com -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup
+        PS C:\> Test-AzDnsAsCodeDomain -Name contoso.com -SubscriptionID $SubscriptionID -ResourceGroup $ResourceGroup
 
         Test if DNSZone exist in Azure DNS Service
     #>
@@ -17,9 +17,7 @@
         [Parameter (Mandatory=$true)][String]$Name,
 
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
-        
-        [Parameter (Mandatory=$true)][String]$TenantId,
-        
+
         [Parameter (Mandatory=$true)][String]$ResourceGroup
     )
     

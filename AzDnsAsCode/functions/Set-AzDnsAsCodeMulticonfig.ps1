@@ -14,9 +14,6 @@
     .PARAMETER SubscriptionID
         Set Subscription ID
 
-    .PARAMETER TenantID
-        Set Tenant ID
-
     .PARAMETER ResourceGroup
         Set ResourceGroup NAME (NOT ID!!!)
 
@@ -32,8 +29,6 @@
 
         [Parameter (Mandatory=$true)][String]$SubscriptionID,
         
-        [Parameter (Mandatory=$true)][String]$TenantId,
-        
         [Parameter (Mandatory=$true)][String]$ResourceGroup
         
     )
@@ -46,8 +41,8 @@
         Write-Output "Set Entries for = Domain: $DNSZone"
 
         #check if Domain exist
-        if ((Test-AzDnsAsCodeDomain -Name $DNSZone -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup) -eq $false) {
-            New-AzDnsAsCodeZone -DNSZoneName $DNSZone -SubscriptionID $SubscriptionID -TenantId $TenantId -ResourceGroup $ResourceGroup
+        if ((Test-AzDnsAsCodeDomain -Name $DNSZone -SubscriptionID $SubscriptionID -ResourceGroup $ResourceGroup) -eq $false) {
+            New-AzDnsAsCodeZone -DNSZoneName $DNSZone -SubscriptionID $SubscriptionID -ResourceGroup $ResourceGroup
 
             Write-Output "Waiting for completing creation.....(10 Secounds)"
             Start-Sleep -Seconds 10
@@ -70,7 +65,6 @@
                     'TTL' = $TTL
                     'body' = $body
                     'SubscriptionId' = $SubscriptionID
-                    'TenantId' = $TenantId
                     'ResourceGroup' = $ResourceGroup
                 }
                 Set-AzDnsAsCodeConfig @params
