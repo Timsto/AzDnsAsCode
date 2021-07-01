@@ -45,10 +45,7 @@
     )
 
 	# Functions to export from this module
-	#FunctionsToExport = @( )
-	
-	# Cmdlets to export from this module
-	CmdletsToExport = @(
+	FunctionsToExport = @( 
 		'Get-AzDnsAsCodeZoneConfig'
 		'Get-AzDnsAsCodeTelemetryOption'
 		'New-AzDnsAsCodeZone'
@@ -58,6 +55,9 @@
 		'Show-AzDnsAsCodeConfiguration'	
 		'Remove-AzDnsAsCodeZone'
 	)
+	
+	# Cmdlets to export from this module
+	#CmdletsToExport = ''
 	
 	# Variables to export from this module
 	#VariablesToExport = ''
