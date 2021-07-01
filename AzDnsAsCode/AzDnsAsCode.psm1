@@ -51,8 +51,8 @@ function Import-ModuleFile
 }
 
 #region Load individual files
-if ($importIndividualFiles)
-{
+#if ($importIndividualFiles)
+#{
 	# Execute Preimport actions
 	foreach ($path in (& "$ModuleRoot\internal\scripts\preimport.ps1")) {
 		. Import-ModuleFile -Path $path
@@ -77,5 +77,6 @@ if ($importIndividualFiles)
 	
 	# End it here, do not load compiled code below
 	return
-}
+#}
 #endregion Load individual files
+#>
