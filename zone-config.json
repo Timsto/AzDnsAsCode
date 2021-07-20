@@ -24,7 +24,17 @@
                         }
                     ]
                     }
-            }
+            },
+            "AzMeetup":{
+              "properties": {
+                  "TTL": 3601,
+                  "ARecords": [
+                      {
+                      "ipv4Address": "127.3.3.21"
+                      }
+                  ]
+                  }
+          }
         },
         "AAAA":{
             "apiv6":{

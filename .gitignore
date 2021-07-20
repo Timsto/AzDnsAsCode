@@ -4,17 +4,6 @@
 *.psproj
 *TempPoint*
 
-# Ignore staging info from Visual Studio
-library/AzDnsAsCode/.vs/*
-library/AzDnsAsCode/AzDnsAsCode/bin/*
-library/AzDnsAsCode/AzDnsAsCode/obj/*
-
-# ignore PowerShell Studio MetaData
-AzDnsAsCode/AzDnsAsCode.psproj
-AzDnsAsCode/AzDnsAsCode.psproj.bak
-AzDnsAsCode/AzDnsAsCode.psprojs
-AzDnsAsCode/AzDnsAsCode.psproj
-
 # ignore the TestResults
 TestResults/*
 

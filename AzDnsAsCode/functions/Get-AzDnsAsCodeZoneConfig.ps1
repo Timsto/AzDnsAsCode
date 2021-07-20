@@ -62,7 +62,6 @@
     #region  API Call
         $response = AzAPICall -uri $uri -method Get -listenOn Content
         Write-Output "---------------------------------------------------------------------------------------------------"
-        Write-Output "Response -> "
     #endregion API Call
     #region Output
     if ($response.Count) {
@@ -73,13 +72,16 @@
         @{Name = "Properties"; Expression = { [string]($_.properties | Select-Object -ExpandProperty "*Recor*")}}, `
         @{Name = "MetaData"; Expression = {"$($_.properties.metadata)"}} | Format-Table -AutoSize
     }
-    else {
+    elseif ($null -ne $response) {
         Write-Output "Anzahl Records: 1"
          $output = $response.Value | Select-Object name, `
          @{Name = "Type"; Expression = {($_.properties | Get-Member | Where-Object {$_.Name -like "*Recor*"}).Name -replace "Records","" -replace "Record",""}}, `
          @{Name = "TTL"; Expression = {"$($_.properties.TTL)"}}, `
          @{Name = "Properties"; Expression = { [string]($_.properties | Select-Object -ExpandProperty "*Recor*")}}, `
          @{Name = "MetaData"; Expression = {"$($_.properties.metadata)"}} | Format-Table -AutoSize
+    }
+    else { 
+        Write-Output "No entry"
     }
         return $output
     #endregion Output
